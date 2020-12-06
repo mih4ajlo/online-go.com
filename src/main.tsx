@@ -203,6 +203,19 @@ try {
     );
 }
 
+try{
+    debugger
+    if ('serviceWorker' in navigator) {
+ 
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+
+    }
+}
+catch (e) {
+
+}
 
 /** Connect to the chat service */
 let auth_connect_fn = () => {return; };

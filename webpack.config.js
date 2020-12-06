@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+//var fileLoader = require('file-loader');
 let fs = require('fs');
 var webpack = require('webpack');
 const pkg = require('./package.json');
@@ -10,9 +11,21 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
+const CopyPlugin = require("copy-webpack-plugin");
+
 let plugins = [];
 
 plugins.push(new ForkTsCheckerWebpackPlugin());
+
+plugins.push( new CopyPlugin({
+      patterns: [
+        { from: "src/manifest.json", to: "./manifest.json" },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    })
+);
 
 plugins.push(new webpack.BannerPlugin(
 `Copyright (C) 2012-2020  Online-Go.com
@@ -67,6 +80,7 @@ module.exports = (env, argv) => {
         mode: production ? 'production' : 'development',
         entry: {
             'ogs': './src/main.tsx',
+            'sw': './src/sw.js'
         },
         resolve: {
             modules: [
@@ -98,8 +112,12 @@ module.exports = (env, argv) => {
                     options: {
                         transpileOnly: true
                     }
-                }
-            ]
+                },
+
+            ],
+            // loaders: [
+            //     { test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|ogg|webmanifest)$/, loader: "file" }
+            // ]
         },
 
         performance: {

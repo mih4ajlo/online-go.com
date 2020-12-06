@@ -14,6 +14,7 @@
       <meta name="Description" content="{{PAGE_DESCRIPTION}}">
 
       <link rel="manifest" href="/manifest.json">
+      
       <link rel="shortcut icon" href="https://cdn.online-go.com/icons/favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" sizes="57x57" href="https://cdn.online-go.com/icons/apple-touch-icon-57x57.png">
       <link rel="apple-touch-icon" sizes="60x60" href="https://cdn.online-go.com/icons/apple-touch-icon-60x60.png">
@@ -293,7 +294,14 @@
         } catch (e) {
             console.error(e);
         }
+        
+        var sw_script_path = "{{CDN_SERVICE}}sw.{{OGS_VERSION_HASH_DOTJS}}";
+
+        document.write('<script defer src="' + sw_script_path + '"><'+'/script>');
+
         document.write('<script defer src="' + ogs_script_path + '"><'+'/script>');
+
+
 
       </script>
 
